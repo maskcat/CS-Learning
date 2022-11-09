@@ -6,6 +6,6 @@
 !script.pl
 !template.latex
 !*.py
-!/
+!*/
 # etc...
 
