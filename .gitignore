@@ -7,5 +7,7 @@
 !template.latex
 !*.py
 !*/
+!ok
+!*.ok
 # etc...
 
