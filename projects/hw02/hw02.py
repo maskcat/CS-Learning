@@ -126,6 +126,10 @@ def make_repeater(func, n):
     5
     """
     "*** YOUR CODE HERE ***"
+    o_func = identity
+    for i in range(n):
+        o_func = compose1(o_func,func)
+    return o_func
 
 
 def zero(f):
