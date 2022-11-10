@@ -84,7 +84,7 @@ def summation_using_accumulate(n, term):
     True
     """
     "*** YOUR CODE HERE ***"
-    print("test")
+    print("test1")
 
 
 def product_using_accumulate(n, term):
