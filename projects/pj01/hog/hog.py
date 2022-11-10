@@ -46,7 +46,7 @@ def free_bacon(score):
     "*** YOUR CODE HERE ***"
     ten = 0
     if score >= 10:
-        ten = score % 100 //10
+        ten = score % 100 // 10
     one = score % 10
     return 10 - one + ten
     # END PROBLEM 2
@@ -70,7 +70,7 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     if num_rolls == 0:
         return free_bacon(opponent_score)
     else:
-        return roll_dice(num_rolls,dice)
+        return roll_dice(num_rolls, dice)
     # END PROBLEM 3
 
 
@@ -80,6 +80,9 @@ def is_swap(player_score, opponent_score):
     """
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    p = player_score % 10
+    o = opponent_score % 10
+    return abs(p-o) == opponent_score % 100 // 10
     # END PROBLEM 4
 
 
@@ -120,6 +123,12 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    if who == 0:
+        score0 += take_turn(strategy0(score0, score1), score1, dice)
+        who = 1
+    else:
+        score1 += take_turn(strategy1(score1, score0), score0, dice)
+        who = 0
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
@@ -137,6 +146,7 @@ def say_scores(score0, score1):
     """A commentary function that announces the score for each player."""
     print("Player 0 now has", score0, "and Player 1 now has", score1)
     return say_scores
+
 
 def announce_lead_changes(last_leader=None):
     """Return a commentary function that announces lead changes.
@@ -162,6 +172,7 @@ def announce_lead_changes(last_leader=None):
             print('Player', leader, 'takes the lead by', abs(score0 - score1))
         return announce_lead_changes(leader)
     return say
+
 
 def both(f, g):
     """Return a commentary function that says what f says, then what g says.
@@ -304,7 +315,6 @@ def run_experiments():
         print('final_strategy win rate:', average_win_rate(final_strategy))
 
     "*** You may add additional experiments as you wish ***"
-
 
 
 def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
