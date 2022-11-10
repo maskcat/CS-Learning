@@ -9,5 +9,8 @@
 !*/
 !ok
 !*.ok
+!*.html
+!*.js
+!*.css
 # etc...
 
