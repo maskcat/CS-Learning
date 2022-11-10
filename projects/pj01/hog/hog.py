@@ -22,6 +22,17 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    result = 0
+    if_one = False
+    for i in range(num_rolls):
+        temp = dice()
+        if temp == 1:
+            if_one = True
+        result += temp
+    if if_one == True:
+        return 1
+    else:
+        return result
     # END PROBLEM 1
 
 
@@ -33,6 +44,11 @@ def free_bacon(score):
     assert score < 100, 'The game should be over.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    ten = 0
+    if score >= 10:
+        ten = score % 100 //10
+    one = score % 10
+    return 10 - one + ten
     # END PROBLEM 2
 
 
@@ -51,6 +67,10 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    if num_rolls == 0:
+        return free_bacon(opponent_score)
+    else:
+        return roll_dice(num_rolls,dice)
     # END PROBLEM 3
 
 
