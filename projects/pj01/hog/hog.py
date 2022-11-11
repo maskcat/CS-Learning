@@ -123,20 +123,27 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    scores = [0, 0]
     while score0 < goal and score1 < goal:
         if who == 0:
-            score0 += take_turn(strategy0(score0, score1), score1, dice)
+            roll_number = strategy0(score0, score1)
+            result = take_turn(roll_number, score1, dice)
+            score0 += result
+            if feral_hogs == True and abs(roll_number-scores[0]) == 2:
+                score0 += 3
+            scores[0] = result
             if is_swap(score0, score1):
-                temp = score1
-                score1 = score0
-                score0 = temp
+                score0,score1 = swap(score0, score1)
             who = other(who)
         else:
-            score1 += take_turn(strategy1(score1, score0), score0, dice)
+            roll_number = strategy1(score1, score0)
+            result = take_turn(roll_number, score0, dice)
+            score1 += result
+            if feral_hogs == True and abs(roll_number-scores[1]) == 2:
+                score1 += 3
+            scores[1] = result
             if is_swap(score1, score0):
-                temp = score1
-                score1 = score0
-                score0 = temp
+               score1,score0 = swap(score1, score0)
             who = other(who)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
@@ -144,6 +151,13 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     "*** YOUR CODE HERE ***"
     # END PROBLEM 6
     return score0, score1
+
+
+def swap(player, opponent):
+    temp = opponent
+    opponent = player
+    player = temp
+    return player,opponent
 
 
 #######################

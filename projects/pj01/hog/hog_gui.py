@@ -69,7 +69,8 @@ def take_turn(prev_rolls, move_history, goal, game_rules):
     game_over = False
 
     try:
-        final_scores = trace_play(hog.play, strategy, strategy, 0, 0, dice=logged_dice, say=log, goal=goal, feral_hogs=feral_hogs)[:2]
+        final_scores = trace_play(hog.play, strategy, strategy, 0, 0,
+                                  dice=logged_dice, say=log, goal=goal, feral_hogs=feral_hogs)[:2]
     except HogLoggingException:
         pass
     else:
@@ -94,6 +95,7 @@ def strategy(name, scores):
         "final_strategy": hog.final_strategy,
     }
     return STRATEGIES[name](*scores[::-1])
+
 
 def safe(commentary):
     def new_commentary(*args, **kwargs):
@@ -120,12 +122,14 @@ def trace_play(play, strategy0, strategy1, score0, score1, dice, goal, say, fera
 
     def mod_strategy(who, my_score, opponent_score):
         if game_trace:
-            prev_total_score = game_trace[-1]["s0_start"] + game_trace[-1]["s1_start"]
+            prev_total_score = game_trace[-1]["s0_start"] + \
+                game_trace[-1]["s1_start"]
             if prev_total_score == my_score + opponent_score:
                 # game is still on last turn since the total number of points
                 # goes up every turn
                 return game_trace[-1]["num_dice"]
-        current_num_dice = (strategy0, strategy1)[who](my_score, opponent_score)
+        current_num_dice = (strategy0, strategy1)[
+            who](my_score, opponent_score)
         current_turn = {
             "s0_start": [my_score, opponent_score][who],
             "s1_start": [my_score, opponent_score][1 - who],
@@ -139,7 +143,8 @@ def trace_play(play, strategy0, strategy1, score0, score1, dice, goal, say, fera
     def mod_dice():
         roll = dice()
         if not game_trace:
-            raise RuntimeError("roll_dice called before either strategy function")
+            raise RuntimeError(
+                "roll_dice called before either strategy function")
         game_trace[-1]["dice_values"].append(roll)
         return roll
 
