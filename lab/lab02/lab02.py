@@ -68,6 +68,12 @@ def both_paths(sofar="S"):
     SUU
     """
     "*** YOUR CODE HERE ***"
+    print(sofar)
+    def up():
+        return both_paths(sofar+"U")
+    def down():
+        return both_paths(sofar+"D")
+    return up,down
 
 
 def compose1(f, g):
@@ -103,7 +109,13 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    def equal(x):
+        fg = compose1(f,g)
+        gf = compose1(g,f)
+        if fg(x) == gf(x):
+            return True
+        return False
+    return equal
 
 def cycle(f1, f2, f3):
     """Returns a function that is itself a higher-order function.
@@ -132,3 +144,13 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    funcs = [f1,f2,f3]
+    def heigh_order(n):
+        def result(x):
+            i = 0
+            while i < n:
+                x = funcs[i%3](x)
+                i += 1
+            return x
+        return result
+    return heigh_order
