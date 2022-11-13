@@ -12,6 +12,14 @@ def pascal(row, column):
     3
     """
     "*** YOUR CODE HERE ***"
+    if row < column:
+        return 0
+    elif row == 0 or column == 0:
+        return 1
+    elif row == column:
+        return 1
+    else:
+        return pascal(row-1, column) + pascal(row-1, column-1)
 
 
 def compose1(f, g):
@@ -40,6 +48,12 @@ def repeated(f, n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n == 1:
+        return f
+    elif n == 0:
+        return lambda x: x
+    else:
+        return compose1(f,repeated(f,n-1))
 
 
 def num_eights(x):
