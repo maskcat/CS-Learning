@@ -78,6 +78,14 @@ def num_eights(x):
     True
     """
     "*** YOUR CODE HERE ***"
+    if x < 10:
+        if x == 8:
+            return num_eights(x//10) + 1
+        return 0
+    if x % 10 == 8:
+        return num_eights(x//10) + 1
+    else:
+        return num_eights(x//10)
 
 
 def pingpong(n):
@@ -113,4 +121,13 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def pingpong_help(value,index,direction):
+        if index == n:
+            return value
+        if index % 8 == 0 or num_eights(index) > 0:
+            return pingpong_help(value+(-1*direction),index+1,-1*direction)
+        else:
+            return pingpong_help(value+direction,index+1,direction)
+    return pingpong_help(1,1,1)
+
 
