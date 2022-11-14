@@ -27,13 +27,18 @@ def reverse_recursive(lst):
     >>> print("Do not use lst[::-1], lst.reverse(), or reversed(lst)!") if any([r in cleaned for r in ["[::", ".reverse", "reversed"]]) else None
     """
     "*** YOUR CODE HERE ***"
-    result = []
-    def recur(lst1,lst_len):
-        if lst_len > 0:
-            result.append(lst1[lst_len-1])
-            recur(lst1[0:lst_len-1],lst_len-1)
-        return result
-    return recur(lst,len(lst))
+#    result = []
+#    def recur(lst1,lst_len):
+#        if lst_len > 0:
+#            result.append(lst1[lst_len-1])
+#            recur(lst1[0:lst_len-1],lst_len-1)
+#        return result
+#    return recur(lst,len(lst))
+    if len(lst) == 1:
+        return [lst[0]]
+    else:
+        lst_len = len(lst) - 1
+        return [lst[lst_len]] + reverse_recursive(lst[0:lst_len])
 
 from math import sqrt
 def distance(city_a, city_b):
