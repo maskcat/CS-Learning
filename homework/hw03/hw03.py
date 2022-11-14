@@ -21,6 +21,7 @@ def composer(func=lambda x: x):
     """
     def func_adder(g):
         "*** YOUR CODE HERE ***"
+        return composer(lambda x: func(g(x)))
     return func, func_adder
 
 
@@ -43,6 +44,10 @@ def g(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n<=3:
+        return n
+    else:
+        return g(n-1)+2*g(n-2)+3*g(n-3)
 
 def g_iter(n):
     """Return the value of G(n), computed iteratively.
@@ -63,6 +68,15 @@ def g_iter(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n<=3:
+        return n
+    else:
+        one,two,three = 1,2,3
+        k=4
+        while k <= n:
+            one,two,three = two,three,3*one+2*two+three
+            k += 1
+        return three
 
 
 def missing_digits(n):
@@ -93,6 +107,15 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    digt1 = n//10 % 10
+    digt2 = n % 10
+    adder = 0
+    if abs(digt1 - digt2) > 1:
+        adder = abs(digt1 - digt2) - 1
+    return missing_digits(n//10) + adder
+
 
 
 def count_change(total):
@@ -112,7 +135,15 @@ def count_change(total):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    def change_help(total,small_coin):
+        if total == small_coin:
+            return 1
+        if total == 0:
+            return 0
+        if small_coin > total:
+            return 0
+        return change_help(total,small_coin*2) + change_help(total-small_coin,small_coin)
+    return change_help(total,1)
 
 def print_move(origin, destination):
     """Print instructions to move a disk."""
