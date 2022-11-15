@@ -6,7 +6,7 @@ def coords(fn, seq, lower, upper):
     [[-2, 4], [1, 1], [3, 9]]
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return [[i, fn(i)] for i in seq if lower <= fn(i) <= upper]
 
 
 def riffle(deck):
@@ -19,7 +19,7 @@ def riffle(deck):
     [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    return [deck[((len(deck) + i) // 2) * (i % 2) + (i // 2) * ((i + 1) % 2)] for i in range(len(deck))]
 
 
 def berry_finder(t):
@@ -78,6 +78,8 @@ def sprout_leaves(t, leaves):
     "*** YOUR CODE HERE ***"
 
 # Abstraction tests for sprout_leaves and berry_finder
+
+
 def check_abstraction():
     """
     There's nothing for you to do for this function, it's just here for the extra doctest
@@ -187,6 +189,7 @@ def build_successors_table(tokens):
         prev = word
     return table
 
+
 def construct_sent(word, table):
     """Prints a random sentence starting with word, sampling from
     table.
@@ -203,6 +206,7 @@ def construct_sent(word, table):
         "*** YOUR CODE HERE ***"
     return result.strip() + word
 
+
 def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com/shakespeare.txt'):
     """Return the words of Shakespeare's plays as a list."""
     import os
@@ -217,10 +221,10 @@ def shakespeare_tokens(path='shakespeare.txt', url='http://composingprograms.com
 # tokens = shakespeare_tokens()
 # table = build_successors_table(tokens)
 
+
 def random_sent():
     import random
     return construct_sent(random.choice(table['.']), table)
-
 
 
 # Tree ADT
@@ -236,6 +240,7 @@ def tree(label, branches=[]):
             assert is_tree(branch), 'branches must be trees'
         return [label] + list(branches)
 
+
 def label(tree):
     """Return the label value of a tree."""
     if change_abstraction.changed:
@@ -243,12 +248,14 @@ def label(tree):
     else:
         return tree[0]
 
+
 def branches(tree):
     """Return the list of branches of the given tree."""
     if change_abstraction.changed:
         return tree['branches']
     else:
         return tree[1:]
+
 
 def is_tree(tree):
     """Returns True if the given tree is a tree, and False otherwise."""
@@ -267,14 +274,17 @@ def is_tree(tree):
                 return False
         return True
 
+
 def is_leaf(tree):
     """Returns True if the given tree's list of branches is empty, and False
     otherwise.
     """
     return not branches(tree)
 
+
 def change_abstraction(change):
     change_abstraction.changed = change
+
 
 change_abstraction.changed = False
 
@@ -302,6 +312,7 @@ def print_tree(t, indent=0):
     for b in branches(t):
         print_tree(b, indent + 1)
 
+
 def copy_tree(t):
     """Returns a copy of t. Only for testing purposes.
 
@@ -312,4 +323,3 @@ def copy_tree(t):
     5
     """
     return tree(label(t), [copy_tree(b) for b in branches(t)])
-
