@@ -53,6 +53,11 @@ def distance(city_a, city_b):
     5.0
     """
     "*** YOUR CODE HERE ***"
+    alon = get_lon(city_a)
+    alat = get_lat(city_a)
+    blon = get_lon(city_b)
+    blat = get_lat(city_b)
+    return sqrt((alon - blon)**2+(alat - blat)**2)
 
 def closer_city(lat, lon, city_a, city_b):
     """
@@ -69,6 +74,16 @@ def closer_city(lat, lon, city_a, city_b):
     'Bucharest'
     """
     "*** YOUR CODE HERE ***"
+    alon = get_lon(city_a)
+    alat = get_lat(city_a)
+    blon = get_lon(city_b)
+    blat = get_lat(city_b)
+    c_to_a = sqrt((alon - lon)**2+(alat - lat)**2)
+    c_to_b = sqrt((blon - lon)**2+(blat - lat)**2)
+    if c_to_a < c_to_b:
+        return get_name(city_a)
+    elif c_to_a > c_to_b:
+        return get_name(city_b)
 
 def check_abstraction():
     """
@@ -177,4 +192,10 @@ def add_chars(w1, w2):
     True
     """
     "*** YOUR CODE HERE ***"
+    if len(w1) == 0:
+        return w2
+    else:
+        index = w2.find(w1[0])
+        w2 = w2[0:index] + w2[index+1:]
+        return add_chars(w1[1:],w2)
 
