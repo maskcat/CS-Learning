@@ -38,14 +38,11 @@ def about(topic):
     """
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
-    result = []
     def contain(s):
         list = split(remove_punctuation(lower(s)))
         for t in topic:
-            result.append(t)
-            for i in list:
-                if t == i:
-                    return True
+            if t in list:
+                return True
         return False
     return contain
     # END PROBLEM 2
