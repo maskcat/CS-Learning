@@ -177,8 +177,8 @@ def start_client(port, default_server, gui_folder, standalone):
 
     socketserver.TCPServer.allow_reuse_address = True
     httpd = HTTPServer(("127.0.0.1", port), Handler)
-    if not standalone:
-        webbrowser.open("http://127.0.0.1:" + str(port), new=0, autoraise=True)
+    # if not standalone:
+    #     webbrowser.open("http://127.0.0.1:" + str(port), new=0, autoraise=True)
     httpd.serve_forever()
 
 

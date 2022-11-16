@@ -11,7 +11,7 @@ import cats
 
 fernet = None
 
-COMMON_WORDS_SET = set(cats.lines_from_file('data/common_words.txt'))
+COMMON_WORDS_SET = set(cats.lines_from_file('/workspace/CS61A/projects/cats/data/common_words.txt'))
 CAPTCHA_QUEUE_LEN = 200
 CAPTCHA_LENGTH = 10
 CAPTCHA_WORD_LEN = 6
