@@ -188,6 +188,12 @@ def replace_leaf(t, find_value, replace_value):
     True
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        if label(t) == find_value:
+            return tree(replace_value,branches(t))
+        else:
+            return t
+    return tree(label(t),[replace_leaf(i,find_value,replace_value) for i in branches(t)])
 
 
 def preorder(t):
@@ -201,6 +207,14 @@ def preorder(t):
     [2, 4, 6]
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return [label(t)]
+    else:
+        list = []
+        for i in branches(t):
+            list += preorder(i)
+        return [label(t)] + list
+        
 
 
 def has_path(t, phrase):
@@ -233,7 +247,15 @@ def has_path(t, phrase):
     """
     assert len(phrase) > 0, 'no path for empty phrases.'
     "*** YOUR CODE HERE ***"
-
+    if len(phrase)==1 and label(t) == phrase[0]:
+        return True
+    elif label(t) == phrase[0]:
+        for i in branches(t):
+            if has_path(i,phrase[1:]):
+                return True
+        return False
+    else:
+        return False
 
 def interval(a, b):
     """Construct an interval from a to b."""
