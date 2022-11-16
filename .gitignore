@@ -9,6 +9,7 @@
 !*/
 !ok
 !*.ok
+!*.txt
 !*.html
 !*.js
 !*.css
