@@ -201,7 +201,13 @@ def time_per_word(times_per_player, words):
         words: a list of words, in the order they are typed.
     """
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+    time = []
+    for p in times_per_player:
+        temp = []
+        for t in range(len(p)-1):
+            temp.append(p[t+1]-p[t])
+        time.append(temp)
+    return game(words,time)
     # END PROBLEM 9
 
 
