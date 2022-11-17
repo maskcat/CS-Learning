@@ -124,18 +124,30 @@ def shifty_shifts(start, goal, limit):
 
 def meowstake_matches(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
+    """if they are the same, return 0;
+    if one of them is empty, while another one is not, return the length of the other one;
+    if limit is touched, return a LARGE number, here I choose a positive infinity;
+    Then, if base cases are not satisfied, check from the first location of start.
+
+    if the first location of start equals the first location of goal, compare the rest, and step unchanged;
+    else, there are three operations to the first location of start
+        after add one letter, we need to compare start and goal[1:], and step += 1;
+        after remove one letter, we need to compare start[1:] and goal, and step += 1;
+        after substitute one letter, we need to compare start[1:] and goal[1:], and step += 1;
+    Above are three recursive calls. Since the problem is trying to find the minimum steps, use min in each recursive step to find the optimized option."""
     assert False, 'Remove this line'
 
-    if ______________: # Fill in the condition
+    if start == goal: # Fill in the condition
         # BEGIN
-        "*** YOUR CODE HERE ***"
+        return 0
         # END
-
-    elif ___________: # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
+    if len(start) ==0 or len(goal) == 0:
+        return len(start) + len(goal)
+    if limit == 0:
+        return float("inf")
+    
+    if start[0] == goal[0]:
+        return meowstake_matches(start[1:],goal[1:],limit)
     else:
         add_diff = ...  # Fill in these lines
         remove_diff = ... 
