@@ -135,12 +135,9 @@ def meowstake_matches(start, goal, limit):
         after remove one letter, we need to compare start[1:] and goal, and step += 1;
         after substitute one letter, we need to compare start[1:] and goal[1:], and step += 1;
     Above are three recursive calls. Since the problem is trying to find the minimum steps, use min in each recursive step to find the optimized option."""
-    assert False, 'Remove this line'
 
-    if start == goal: # Fill in the condition
-        # BEGIN
+    if start == goal:
         return 0
-        # END
     if len(start) ==0 or len(goal) == 0:
         return len(start) + len(goal)
     if limit == 0:
@@ -152,9 +149,6 @@ def meowstake_matches(start, goal, limit):
         add_diff = ...  # Fill in these lines
         remove_diff = ... 
         substitute_diff = ... 
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
 
 
 def final_diff(start, goal, limit):
