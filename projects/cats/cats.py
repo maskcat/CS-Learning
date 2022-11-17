@@ -93,7 +93,13 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     than LIMIT.
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    if user_word in valid_words:
+        return user_word
+    diff = [[w, diff_function(user_word,w,limit)]for w in valid_words if diff_function(user_word,w,limit) <= limit]
+    diff.sort(key=lambda e: e[1])
+    if len(diff) > 0:
+        return diff[0][0]
+    return user_word
     # END PROBLEM 5
 
 
@@ -103,7 +109,16 @@ def shifty_shifts(start, goal, limit):
     their lengths.
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    if start == goal:
+        return 0
+    if limit == 0:
+        return len(goal)+len(start)
+    if len(start) == 0 or len(goal) == 0:
+        return len(goal)+len(start)
+    if start[0] != goal[0]:
+        return shifty_shifts(start[1:],goal[1:],limit-1) + 1
+    else:
+        return shifty_shifts(start[1:],goal[1:],limit)
     # END PROBLEM 6
 
 
