@@ -16,5 +16,6 @@
 !*.gif
 !*.ico
 !*.jpeg
+|*.ttf
 # etc...
 
