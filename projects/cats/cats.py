@@ -222,7 +222,14 @@ def fastest_words(game):
     players = range(len(all_times(game)))  # An index for each player
     words = range(len(all_words(game)))    # An index for each word
     # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
+    result = [[] for i in players]
+    for w in words:
+        times = []
+        for p in players:
+            times.append(time(game,p,w))
+        res_index = times.index(min(times))
+        result[res_index].append(word_at(game,w))
+    return result
     # END PROBLEM 10
 
 
