@@ -38,6 +38,7 @@ def about(topic):
     """
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
+
     def contain(s):
         list = split(remove_punctuation(lower(s)))
         for t in topic:
@@ -70,7 +71,7 @@ def accuracy(typed, reference):
     # BEGIN PROBLEM 3
     if len(typed_words) == 0:
         return 0.0
-    count = 0;
+    count = 0
     for i in range(len(typed_words)):
         if i < len(reference_words):
             if typed_words[i] == reference_words[i]:
@@ -95,7 +96,8 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     # BEGIN PROBLEM 5
     if user_word in valid_words:
         return user_word
-    diff = [[w, diff_function(user_word,w,limit)]for w in valid_words if diff_function(user_word,w,limit) <= limit]
+    diff = [[w, diff_function(user_word, w, limit)]
+            for w in valid_words if diff_function(user_word, w, limit) <= limit]
     diff.sort(key=lambda e: e[1])
     if len(diff) > 0:
         return diff[0][0]
@@ -116,9 +118,9 @@ def shifty_shifts(start, goal, limit):
     if len(start) == 0 or len(goal) == 0:
         return len(goal)+len(start)
     if start[0] != goal[0]:
-        return shifty_shifts(start[1:],goal[1:],limit-1) + 1
+        return shifty_shifts(start[1:], goal[1:], limit-1) + 1
     else:
-        return shifty_shifts(start[1:],goal[1:],limit)
+        return shifty_shifts(start[1:], goal[1:], limit)
     # END PROBLEM 6
 
 
@@ -138,17 +140,18 @@ def meowstake_matches(start, goal, limit):
 
     if start == goal:
         return 0
-    if len(start) ==0 or len(goal) == 0:
+    if len(start) == 0 or len(goal) == 0:
         return len(start) + len(goal)
     if limit == 0:
         return float("inf")
-    
     if start[0] == goal[0]:
-        return meowstake_matches(start[1:],goal[1:],limit)
+        return meowstake_matches(start[1:], goal[1:], limit)
     else:
-        add_diff = ...  # Fill in these lines
-        remove_diff = ... 
-        substitute_diff = ... 
+        add_diff = meowstake_matches(
+            start, goal[1:], limit-1)  # Fill in these lines
+        remove_diff = meowstake_matches(start[1:], goal, limit-1)
+        substitute_diff = meowstake_matches(start[1:], goal[1:], limit-1)
+        return min(add_diff, remove_diff, substitute_diff)+1
 
 
 def final_diff(start, goal, limit):
@@ -211,10 +214,14 @@ def fastest_words(game):
 
 def game(words, times):
     """A data abstraction containing all words typed and their times."""
-    assert all([type(w) == str for w in words]), 'words should be a list of strings'
-    assert all([type(t) == list for t in times]), 'times should be a list of lists'
-    assert all([isinstance(i, (int, float)) for t in times for i in t]), 'times lists should contain numbers'
-    assert all([len(t) == len(words) for t in times]), 'There should be one word per time.'
+    assert all([type(w) == str for w in words]
+               ), 'words should be a list of strings'
+    assert all([type(t) == list for t in times]
+               ), 'times should be a list of lists'
+    assert all([isinstance(i, (int, float))
+               for t in times for i in t]), 'times lists should contain numbers'
+    assert all([len(t) == len(words) for t in times]
+               ), 'There should be one word per time.'
     return [words, times]
 
 
@@ -245,6 +252,7 @@ def game_string(game):
     """A helper function that takes in a game object and returns a string representation of it"""
     return "game(%s, %s)" % (game[0], game[1])
 
+
 enable_multiplayer = False  # Change to True when you
 
 ##########################
@@ -252,26 +260,31 @@ enable_multiplayer = False  # Change to True when you
 ##########################
 
 key_distance = get_key_distances()
+
+
 def key_distance_diff(start, goal, limit):
     """ A diff function that takes into account the distances between keys when
     computing the difference score."""
 
-    start = start.lower() #converts the string to lowercase
-    goal = goal.lower() #converts the string to lowercase
+    start = start.lower()  # converts the string to lowercase
+    goal = goal.lower()  # converts the string to lowercase
 
     # BEGIN PROBLEM EC1
     "*** YOUR CODE HERE ***"
     # END PROBLEM EC1
 
+
 def memo(f):
     """A memoization function as seen in John Denero's lecture on Growth"""
 
     cache = {}
+
     def memoized(*args):
         if args not in cache:
             cache[args] = f(*args)
         return cache[args]
     return memoized
+
 
 key_distance_diff = count(key_distance_diff)
 
@@ -292,7 +305,7 @@ def faster_autocorrect(user_word, valid_words, diff_function, limit):
 def run_typing_test(topics):
     """Measure typing speed and accuracy on the command line."""
     paragraphs = lines_from_file('data/sample_paragraphs.txt')
-    select = lambda p: True
+    def select(p): return True
     if topics:
         select = about(topics)
     i = 0
