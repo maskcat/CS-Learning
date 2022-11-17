@@ -68,7 +68,14 @@ def accuracy(typed, reference):
     typed_words = split(typed)
     reference_words = split(reference)
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    if len(typed_words) == 0:
+        return 0.0
+    count = 0;
+    for i in range(len(typed_words)):
+        if i < len(reference_words):
+            if typed_words[i] == reference_words[i]:
+                count += 1
+    return count * 100 / len(typed_words)
     # END PROBLEM 3
 
 
@@ -76,7 +83,7 @@ def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string."""
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    return len(typed) / 5 * 60 / elapsed
     # END PROBLEM 4
 
 
