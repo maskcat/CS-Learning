@@ -108,7 +108,11 @@ def reverse(lst):
     >>> odd_list
     [-8, 72, 42]
     """
-    "*** YOUR CODE HERE ***"
+    new_list = lst.copy()
+    m = 0
+    for i in range(len(new_list)-1,-1,-1):
+        lst[m] = new_list[i]
+        m+=1
 
 
 cs61a = {
@@ -136,9 +140,18 @@ def make_glookup(class_assignments):
     >>> student1("PJ1", 18)
     0.8913043478260869
     """
-    "*** YOUR CODE HERE ***"
-
-
+    real_class_assignments = {}
+    def student(name,grade):
+        nonlocal class_assignments
+        nonlocal real_class_assignments
+        real_class_assignments[name] = grade
+        sum_grade = 0
+        for key in real_class_assignments.keys():
+            sum_grade += class_assignments[key]
+        real_sum_grade = sum(real_class_assignments.values())
+        return real_sum_grade / sum_grade
+    return student
+    
 def num_trees(n):
     """How many full binary trees have exactly n leaves? E.g.,
 
