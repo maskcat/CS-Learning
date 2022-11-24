@@ -133,7 +133,24 @@ def merge(incr_a, incr_b):
     """
     iter_a, iter_b = iter(incr_a), iter(incr_b)
     next_a, next_b = next(iter_a, None), next(iter_b, None)
-    "*** YOUR CODE HERE ***"
+    while next_a is not None or next_b is not None:
+        if next_a == next_b:
+            yield next_a
+            next_a, next_b = next(iter_a, None), next(iter_b, None)
+        elif next_a is None and next_b is not None:
+            yield next_b
+            next_b = next(iter_b, None)
+        elif next_b is None and next_a is not None:
+            yield next_a
+            next_a = next(iter_a, None)
+        elif next_a < next_b:
+            yield next_a
+            next_a = next(iter_a, None)
+        elif next_a > next_b:
+            yield next_b
+            next_b = next(iter_b, None)
+
+    
 
 
 def make_joint(withdraw, old_pass, new_pass):
