@@ -19,7 +19,17 @@ def make_bank(balance):
     120
     """
     def bank(message, amount):
-        "*** YOUR CODE HERE ***"
+        nonlocal balance
+        if message == 'withdraw':
+            if balance - amount < 0:
+                return 'Insufficient funds'
+            balance = balance - amount
+            return balance
+        elif message == 'deposit':
+            balance = balance + amount
+            return balance
+        else:
+            return 'Invalid message'
     return bank
 
 
@@ -51,8 +61,21 @@ def make_withdraw(balance, password):
     >>> type(w(10, 'l33t')) == str
     True
     """
-    "*** YOUR CODE HERE ***"
-
+    error_pwd = []
+    def withdraw(amount,pwd):
+        nonlocal balance,password,error_pwd
+        if len(error_pwd) < 3:
+            if pwd == password:
+                if balance - amount < 0:
+                    return 'Insufficient funds'
+                balance = balance - amount
+                return balance
+            else:
+                error_pwd.append(pwd)
+                return 'Incorrect password'
+        else:
+            return "Too many incorrect attempts. Attempts: " + str(error_pwd)
+    return withdraw
 
 def repeated(t, k):
     """Return the first value in iterator T that appears K times in a row. Iterate through the items such that
