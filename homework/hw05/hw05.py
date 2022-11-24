@@ -98,7 +98,20 @@ def repeated(t, k):
     2
     """
     assert k > 1
-    "*** YOUR CODE HERE ***"
+    count = 1
+    i1 = next(t)
+    try:
+        while True:
+            i2 = next(t)
+            if i1 == i2:
+                count += 1
+            else:
+                count = 1
+                i1 = i2
+            if count == k:
+                return i1
+    except StopIteration:
+        pass
 
 
 def merge(incr_a, incr_b):
