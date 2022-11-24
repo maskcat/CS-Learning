@@ -191,8 +191,17 @@ def make_joint(withdraw, old_pass, new_pass):
     >>> make_joint(w, 'hax0r', 'hello')
     "Too many incorrect attempts. Attempts: ['my', 'secret', 'password']"
     """
-    "*** YOUR CODE HERE ***"
-
+    value = withdraw(0,old_pass)
+    if type(value) == str:
+        return value
+    pwd = [old_pass,new_pass]
+    def new_withdraw(amount,password):
+        nonlocal pwd
+        if password in pwd:
+            return withdraw(amount,pwd[0])
+        else:
+            return withdraw(amount,password)
+    return new_withdraw
 
 def remainders_generator(m):
     """
@@ -225,7 +234,14 @@ def remainders_generator(m):
     7
     11
     """
-    "*** YOUR CODE HERE ***"
+    def gen():
+        while True:
+            n_next = next(n)
+            if n_next % m == i:
+                yield n_next
+    for i in range(m):
+        n = naturals()
+        yield gen()
 
 
 def naturals():
