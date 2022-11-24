@@ -206,14 +206,21 @@ def make_advanced_counter_maker():
     >>> tom_counter('global-count')
     1
     """
-    ________________
-
-    def ____________(__________):
-        ________________
-
-        def ____________(__________):
-            ________________
-            "*** YOUR CODE HERE ***"
-            # as many lines as you want
-        ________________
-    ________________
+    global_count = 0
+    def make_counter():
+        count = 0
+        def counter(name):
+            nonlocal count
+            nonlocal global_count
+            if name == 'count':
+                count += 1
+                return count
+            elif name =='global-count':
+                global_count += 1
+                return global_count
+            elif name == 'reset':
+                count = 0
+            else:
+                global_count = 0
+        return counter
+    return make_counter
