@@ -7,7 +7,15 @@ def convert_link(link):
     >>> convert_link(Link.empty)
     []
     """
-    "*** YOUR CODE HERE ***"
+    # lst = []
+    # while link is not Link.empty:
+    #     lst.append(link.first)
+    #     link = link.rest
+    # return lst
+    if link is not Link.empty:
+        return [link.first] + convert_link(link.rest)
+    else:
+        return []
 
 
 def every_other(s):
@@ -27,8 +35,16 @@ def every_other(s):
     >>> singleton
     Link(4)
     """
-    "*** YOUR CODE HERE ***"
-
+    lst = convert_link(s)
+    def other_help(l,sl):
+        print(s)
+        print(l)
+        if sl is not Link.empty:
+            if lst.index(sl.first) % 2 == 1:
+                l.rest = sl.rest
+            other_help(sl,sl.rest)
+    if len(lst) > 2:
+        other_help(s,s.rest)
 
 def label_squarer(t):
     """Mutates a Tree t by squaring all its elements.
