@@ -37,8 +37,6 @@ def every_other(s):
     """
     lst = convert_link(s)
     def other_help(l,sl):
-        print(s)
-        print(l)
         if sl is not Link.empty:
             if lst.index(sl.first) % 2 == 1:
                 l.rest = sl.rest
