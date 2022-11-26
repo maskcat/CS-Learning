@@ -52,7 +52,7 @@ def label_squarer(t):
     >>> t
     Tree(1, [Tree(9, [Tree(25)]), Tree(49)])
     """
-    "*** YOUR CODE HERE ***"
+    t.map(lambda x : x ** 2)
 
 
 def cumulative_mul(t):
@@ -64,7 +64,15 @@ def cumulative_mul(t):
     >>> t
     Tree(105, [Tree(15, [Tree(5)]), Tree(7)])
     """
-    "*** YOUR CODE HERE ***"
+
+    def help(tree):
+        base = 1 * tree.label
+        for i in tree.branches:
+            base = base * help(i)
+        return base
+    t.label = help(t)
+    for i in t.branches:
+        i.label = help(i)
 
 
 def has_cycle(link):
@@ -81,7 +89,13 @@ def has_cycle(link):
     >>> has_cycle(u)
     False
     """
-    "*** YOUR CODE HERE ***"
+    def help(l):
+        if l.rest is not Link.empty:
+            if l.rest is link:
+                return True
+            return help(l.rest)
+        return False
+    return help(link)
 
 def has_cycle_constant(link):
     """Return whether link contains a cycle.
