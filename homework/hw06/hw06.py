@@ -111,17 +111,21 @@ class Mint:
         self.update()
 
     def create(self, kind):
-        "*** YOUR CODE HERE ***"
+        coin = kind(self.year)
+        return coin
 
     def update(self):
-        "*** YOUR CODE HERE ***"
+        self.year = Mint.current_year
 
 class Coin:
     def __init__(self, year):
         self.year = year
 
     def worth(self):
-        "*** YOUR CODE HERE ***"
+        extra = Mint.current_year - self.year -50
+        if extra < 0:
+            extra = 0
+        return self.cents + extra
 
 class Nickel(Coin):
     cents = 5
@@ -155,8 +159,36 @@ def is_bst(t):
     >>> is_bst(t7)
     False
     """
-    "*** YOUR CODE HERE ***"
+    def bst_max(tree):
+        if tree.is_leaf():
+            return tree.label
+        elif len(tree.branches) == 1:
+            return max(bst_max(tree.branches[0]),tree.label)
+        else:
+            return max(bst_max(tree.branches[1]),tree.label)
+    def bst_min(tree):
+        if tree.is_leaf():
+            return tree.label
+        else:
+            return min(bst_min(tree.branches[0]),tree.label)
 
+    if t.is_leaf():
+        return True
+    elif len(t.branches) == 1:
+        left ,right = t.branches[0],t.branches[0]
+        if bst_max(left) <= t.label or bst_min(right) >= t.label:
+            return is_bst(right)
+        else:
+            return False
+    elif len(t.branches) == 2:
+        left ,right = t.branches[0],t.branches[1]
+        if bst_max(left) <= t.label and bst_min(right) >= t.label:
+            return is_bst(left) and is_bst(right)
+        else:
+            return False
+    else:
+        return False
+    return True
 
 def store_digits(n):
     """Stores the digits of a positive number n in a linked list.
@@ -173,7 +205,20 @@ def store_digits(n):
     >>> cleaned = re.sub(r"#.*\\n", '', re.sub(r'"{3}[\s\S]*?"{3}', '', inspect.getsource(store_digits)))
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
-    "*** YOUR CODE HERE ***"
+    i = 0
+    first = 0
+    while True:
+        ten = 10 ** i
+        if n < 10:
+            first = n
+            break
+        if 10 > (n // ten) >= 1:
+            first = n // ten
+            break
+        i += 1
+    if n == 0:
+        return Link.empty
+    return Link(first,store_digits(n-first*ten))
 
 
 def path_yielder(t, value):
@@ -236,8 +281,13 @@ def remove_all(link , value):
     >>> print(l1)
     <0 1>
     """
-    "*** YOUR CODE HERE ***"
-
+    if link.rest == Link.empty:
+        return
+    if link.rest.first == value:
+        link.rest = link.rest.rest
+        remove_all(link,value)
+    else:
+        remove_all(link.rest,value)
 
 def deep_map(f, link):
     """Return a Link with the same structure as link but with fn mapped over
