@@ -124,14 +124,11 @@ class Ant(Insect):
             place.ant = self
         else:
             # BEGIN Problem 9
-            print(isinstance(self,ContainerAnt))
-            if isinstance(self,ContainerAnt) and self.contain_ant is None:
-                self.contain_ant = place.ant
-                place.remove_insect(place.ant)
-            elif isinstance(place.ant,ContainerAnt) and place.ant.contain_ant is None:
-                place.ant.contain_ant = self
-                self = place.ant
-                place.remove_insect(place.ant)
+            if isinstance(self, ContainerAnt) and self.can_contain(place.ant):
+                self.contain_ant(place.ant)
+                place.ant = self
+            elif isinstance(place.ant, ContainerAnt) and place.ant.can_contain(self):
+                place.ant.contain_ant(self)
             else:
                 assert place.ant is None, 'Two ants in {0}'.format(place)
             # END Problem 9
@@ -185,7 +182,7 @@ class ThrowerAnt(Ant):
         place = self.place
         distance = 0
         while type(place) is not Hive:
-            if len(place.bees) > 0:
+            if place.bees > []:
                 if self.min_range <= distance <= self.max_range:
                     return rANTdom_else_none(place.bees)
                 place = place.entrance
@@ -322,6 +319,7 @@ class NinjaAnt(Ant):
     # BEGIN Problem 7
     implemented = True   # Change to True to view in the GUI
     # END Problem 7
+
     def action(self, gamestate):
         # BEGIN Problem 7
         if self.place.bees > []:
@@ -332,6 +330,8 @@ class NinjaAnt(Ant):
         # END Problem 7
 
 # BEGIN Problem 8
+
+
 class WallAnt(Ant):
     """WallAnt has big armor."""
 
@@ -351,7 +351,7 @@ class ContainerAnt(Ant):
 
     def can_contain(self, other):
         # BEGIN Problem 9
-        if self.contain_ant is None and type(other.contain_ant) is not ContainerAnt:
+        if self.contained_ant is None and not isinstance(other, ContainerAnt):
             return True
         else:
             return False
@@ -359,7 +359,7 @@ class ContainerAnt(Ant):
 
     def contain_ant(self, ant):
         # BEGIN Problem 9
-        self.contain_ant = ant
+        self.contained_ant = ant
         # END Problem 9
 
     def remove_ant(self, ant):
@@ -379,7 +379,8 @@ class ContainerAnt(Ant):
 
     def action(self, gamestate):
         # BEGIN Problem 9
-        "*** YOUR CODE HERE ***"
+        if self.contained_ant is not None:
+            self.contained_ant.action(gamestate)
         # END Problem 9
 
 
@@ -391,8 +392,9 @@ class BodyguardAnt(ContainerAnt):
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 9
     implemented = True   # Change to True to view in the GUI
+
     def __init__(self, *args, **kwargs):
-        ContainerAnt.__init__(self,armor=2)
+        ContainerAnt.__init__(self, armor=2)
     # END Problem 9
 
 
