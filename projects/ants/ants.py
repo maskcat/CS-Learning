@@ -106,6 +106,7 @@ class Ant(Insect):
     food_cost = 0
     # ADD CLASS ATTRIBUTES HERE
     blocks_path = True
+    queen_buff = False
 
     def __init__(self, armor=1):
         """Create an Ant with an ARMOR quantity."""
@@ -454,12 +455,15 @@ class QueenAnt(ScubaThrower):  # You should change this line
     food_cost = 7
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 13
+    index = 0
     implemented = True   # Change to True to view in the GUI
     # END Problem 13
 
     def __init__(self, armor=1):
         # BEGIN Problem 13
-        "*** YOUR CODE HERE ***"
+        super().__init__(armor)
+        self.index = QueenAnt.index
+        QueenAnt.index += 1
         # END Problem 13
 
     def action(self, gamestate):
@@ -469,16 +473,51 @@ class QueenAnt(ScubaThrower):  # You should change this line
         Impostor queens do only one thing: reduce their own armor to 0.
         """
         # BEGIN Problem 13
-        "*** YOUR CODE HERE ***"
-        # END Problem 13
+        if self.index == 0:
+            super().action(gamestate)
+            place = self.place.exit
+            while place is not None:
+                ant = place.ant
+                if ant is not None and ant is not self:
+                    if isinstance(ant,ContainerAnt):
+                        if ant.queen_buff is False:
+                            ant.damage = ant.damage * 2
+                            ant.queen_buff = True
+                        contain = ant.contained_ant
+                        if contain is not None and contain.queen_buff is False:
+                            contain.damage = contain.damage * 2
+                            contain.queen_buff = True
+                    else:
+                        if ant.queen_buff is False:
+                              ant.damage = ant.damage * 2
+                              ant.queen_buff = True
+                place = place.exit
+        else:
+            self.reduce_armor(self.armor)
+            # END Problem 13
 
     def reduce_armor(self, amount):
         """Reduce armor by AMOUNT, and if the True QueenAnt has no armor
         remaining, signal the end of the game.
         """
         # BEGIN Problem 13
-        "*** YOUR CODE HERE ***"
+        if self.index == 0:
+            Ant.reduce_armor(self,amount)
+            if self.armor <= 0:
+                bees_win()
+        else:
+            Ant.reduce_armor(self,amount)
         # END Problem 13
+    def remove_from(self, place):
+        if place.ant is self and self.index != 0:
+            place.ant = None
+            Insect.remove_from(self, place)
+        elif place.ant is None:
+            assert False, '{0} is not in {1}'.format(self, place)
+        else:
+            if isinstance(place.ant,ContainerAnt) and self.index != 0:
+                place.ant.remove_ant(self)
+                Insect.remove_from(self, place)
 
 
 class AntRemover(Ant):
