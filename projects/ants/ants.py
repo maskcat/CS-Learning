@@ -52,6 +52,7 @@ class Insect:
 
     damage = 0
     # ADD CLASS ATTRIBUTES HERE
+    is_watersafe = False
 
     def __init__(self, armor, place=None):
         """Create an Insect with an ARMOR amount and a starting PLACE."""
@@ -181,7 +182,7 @@ class ThrowerAnt(Ant):
         # BEGIN Problem 3 and 4
         place = self.place
         distance = 0
-        while type(place) is not Hive:
+        while place is not beehive:
             if place.bees > []:
                 if self.min_range <= distance <= self.max_range:
                     return rANTdom_else_none(place.bees)
@@ -406,7 +407,7 @@ class TankAnt(ContainerAnt):
     food_cost = 6
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 10
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 10
 
     def __init__(self, armor=2):
@@ -414,7 +415,13 @@ class TankAnt(ContainerAnt):
 
     def action(self, gamestate):
         # BEGIN Problem 10
-        "*** YOUR CODE HERE ***"
+        if self.place.bees > []:
+            bees = list(self.place.bees)
+            for bee in bees:
+                i = self.place.bees.index(bee)
+                self.place.bees[i].reduce_armor(self.damage)
+        if self.contained_ant is not None:
+            self.contained_ant.action(gamestate)
         # END Problem 10
 
 
@@ -425,17 +432,21 @@ class Water(Place):
         """Add an Insect to this place. If the insect is not watersafe, reduce
         its armor to 0."""
         # BEGIN Problem 11
-        "*** YOUR CODE HERE ***"
+        Place.add_insect(self,insect)
+        if not insect.is_watersafe:
+            insect.reduce_armor(insect.armor)
         # END Problem 11
 
 # BEGIN Problem 12
-# The ScubaThrower class
+class ScubaThrower(ThrowerAnt):
+    """a watersafe insects."""
+    name = 'Thrower'
+    food_cost = 6
+    is_watersafe = True
 # END Problem 12
 
-# BEGIN Problem 13
-
-
-class QueenAnt(Ant):  # You should change this line
+    # BEGIN Problem 13
+class QueenAnt(ScubaThrower):  # You should change this line
     # END Problem 13
     """The Queen of the colony. The game is over if a bee enters her place."""
 
@@ -443,7 +454,7 @@ class QueenAnt(Ant):  # You should change this line
     food_cost = 7
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 13
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 13
 
     def __init__(self, armor=1):
@@ -487,6 +498,7 @@ class Bee(Insect):
     damage = 1
     # OVERRIDE CLASS ATTRIBUTES HERE
     blocks_path = False
+    is_watersafe = True
 
     def sting(self, ant):
         """Attack an ANT, reducing its armor by 1."""
