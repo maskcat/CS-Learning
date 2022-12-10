@@ -1,5 +1,8 @@
 (define (over-or-under num1 num2)
-  'YOUR-CODE-HERE
+  (cond 
+    ((> num1 num2) 1)
+    ((= num1 num2) 0)
+    (else -1))
 )
 
 ;;; Tests
@@ -12,9 +15,18 @@
 
 
 (define (filter-lst fn lst)
-  'YOUR-CODE-HERE
+  (define result (list))
+  (define (filter-lst-iter olst nlst)
+    (if (null? olst)
+        nlst
+        (if (fn (car olst))
+            (filter-lst-iter (cdr olst) (append nlst (list(car olst))))
+            (filter-lst-iter (cdr olst) nlst)
+        )
+    )
+  )
+  (filter-lst-iter lst result)
 )
-
 ;;; Tests
 (define (even? x)
   (= (modulo x 2) 0))
