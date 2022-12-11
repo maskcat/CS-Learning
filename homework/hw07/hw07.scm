@@ -20,11 +20,14 @@
 (define (square x) (* x x))
 
 (define (pow x y)
-  (cond ((= x 1) 1)
-    ((= x 0) 0)
-    ((if (= y 1)
-      x
-      (pow (square x) (quotient y 2)))))
+  (
+    cond 
+      ((= x 1) 1)
+      ((= x 0) 0)
+      ((= y 1) x)
+      ((if (even? y)
+        (square (pow x (/ y 2)))
+        (* x (square (pow x (quotient y 2)))))))
 )
 
 
