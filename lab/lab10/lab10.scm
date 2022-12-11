@@ -15,7 +15,6 @@
 
 
 (define (filter-lst fn lst)
-  (define result (list))
   (define (filter-lst-iter olst nlst)
     (if (null? olst)
         nlst
@@ -25,7 +24,7 @@
         )
     )
   )
-  (filter-lst-iter lst result)
+  (filter-lst-iter lst (list))
 )
 ;;; Tests
 (define (even? x)
@@ -35,7 +34,12 @@
 
 
 (define (make-adder num)
-  'YOUR-CODE-HERE
+; define
+  ; (define (adder inc)
+  ;   (+ inc num))
+  ; adder
+; lambda
+  (lambda (inc) (+ inc num))
 )
 
 ;;; Tests
@@ -45,17 +49,26 @@
 
 
 (define lst
-  'YOUR-CODE-HERE
+;list
+  ; (list (list 1) 2 (list 3 4) 5)
+;cons
+  (cons (cons 1 nil) (cons 2 (cons (cons 3 (cons 4 nil)) (cons 5 nil))))
 )
 
 
 (define (composed f g)
-  'YOUR-CODE-HERE
+  (lambda (a) (f ((lambda (x) (g x)) a)))
 )
 
 
 (define (remove item lst)
-  'YOUR-CODE-HERE
+  (define (is-not-item x)
+    (if (= x item)
+      #f
+      #t))
+  (if (null? lst)
+    (list)
+    (filter-lst is-not-item lst))
 )
 
 
@@ -69,7 +82,9 @@
 
 
 (define (no-repeats s)
-  'YOUR-CODE-HERE
+  (if (null? s)
+    nil
+    (cons (car s) (no-repeats (remove (car s) (cdr s)))))
 )
 
 
