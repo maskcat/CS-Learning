@@ -32,13 +32,19 @@
 
 
 (define (unique s)
-  'YOUR-CODE-HERE
+  (if (null? s)
+    nil
+    (cons (car s) (unique (filter (lambda (x) (not (eq? x (car s)))) (cdr s)))))
 )
 
 
 (define (replicate x n)
-  'YOUR-CODE-HERE
-  )
+  (define (rep-help x n lst)
+    (if (= n 0)
+      lst
+      (rep-help x (- n 1) (append lst (list x)))))
+  (rep-help x n (list))
+)
 
 
 (define (accumulate combiner start n term)
