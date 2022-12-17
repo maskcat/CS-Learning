@@ -48,12 +48,19 @@
 
 
 (define (accumulate combiner start n term)
-  'YOUR-CODE-HERE
+  (if (= n 0)
+    start
+    (combiner (term n) (accumulate combiner start (- n 1) term)))
 )
 
 
 (define (accumulate-tail combiner start n term)
-  'YOUR-CODE-HERE
+    (define (accumulate-help combiner start n term result)
+        (if (= n 0)
+            result
+            (accumulate-help combiner start (- n 1) term (combiner result (term n))))
+    )
+    (accumulate-help combiner start n term start)
 )
 
 
