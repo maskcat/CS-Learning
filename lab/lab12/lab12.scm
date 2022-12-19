@@ -1,7 +1,5 @@
-
 (define-macro (def func args body)
-    'YOUR-CODE-HERE)
-
+    (list 'define (append (list func) args) body))
 
 (define (map-stream f s)
     (if (null? s)
