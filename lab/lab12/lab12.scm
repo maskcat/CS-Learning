@@ -6,8 +6,9 @@
     	nil
     	(cons-stream (f (car s)) (map-stream f (cdr-stream s)))))
 
-(define all-three-multiples
-  'YOUR-CODE-HERE
+(define all-three-multiples 
+  (map-stream (lambda (x) (+ x 3)) 
+  (cons-stream 0 all-three-multiples))
 )
 
 
