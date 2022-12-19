@@ -13,7 +13,11 @@
 
 
 (define (compose-all funcs)
-  'YOUR-CODE-HERE
+  (define (compose n) 
+    (if (eq? nil funcs)
+      n
+      ((compose-all (cdr funcs)) ((car funcs) n))))
+  compose
 )
 
 
