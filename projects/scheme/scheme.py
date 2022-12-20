@@ -157,7 +157,15 @@ class BuiltinProcedure(Procedure):
         # Convert a Scheme list to a Python list
         python_args = []
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
+        while args is not nil:
+            python_args.append(args.first)
+            args = args.rest
+        if self.use_env:
+            python_args.append(env)
+        try:
+            return self.fn(*python_args)
+        except TypeError:
+            raise SchemeError(f'arguments are not in a list: {args}')
         # END PROBLEM 3
 
 class LambdaProcedure(Procedure):
