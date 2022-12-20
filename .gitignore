@@ -19,6 +19,7 @@
 |*.ttf
 !*.scm
 !scheme
+!*.rst
 # etc...
 
 .lightly
