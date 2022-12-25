@@ -1,2 +1,2 @@
 # CS61A
-my solution for CS61A
+My solution for CS61A
