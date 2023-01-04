@@ -212,7 +212,7 @@ class LambdaProcedure(Procedure):
         """Make a frame that binds my formal parameters to ARGS, a Scheme list
         of values, for a lexically-scoped call evaluated in my parent environment."""
         # BEGIN PROBLEM 11
-        "*** YOUR CODE HERE ***"
+        return self.env.make_child_frame(self.formals, args)
         # END PROBLEM 11
 
     def __str__(self):
@@ -368,7 +368,17 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if len(expressions) == 0:
+        return True
+    else:
+        exp = expressions
+        while exp is not nil:
+            if is_false_primitive(exp.first):
+                return False
+            exp = exp.rest
+            if len(exp) == 1:
+                # TODO complete and
+                return scheme_eval(exp.first, env)
     # END PROBLEM 12
 
 
