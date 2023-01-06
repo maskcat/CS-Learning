@@ -372,13 +372,12 @@ def do_and_form(expressions, env):
         return True
     else:
         exp = expressions
-        while exp is not nil:
-            if is_false_primitive(exp.first):
+        while exp.rest is not nil:
+            value = scheme_eval(exp.first, env)
+            if is_false_primitive(value):
                 return False
             exp = exp.rest
-            if len(exp) == 1:
-                # TODO complete and
-                return scheme_eval(exp.first, env)
+        return scheme_eval(exp.first, env)
     # END PROBLEM 12
 
 
@@ -396,7 +395,16 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if len(expressions) == 0:
+        return False
+    else:
+        exp = expressions
+        while exp.rest is not nil:
+            value = scheme_eval(exp.first, env)
+            if is_true_primitive(value):
+                return scheme_eval(exp.first, env)
+            exp = exp.rest
+        return scheme_eval(exp.first, env)
     # END PROBLEM 12
 
 
