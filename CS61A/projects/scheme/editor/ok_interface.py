@@ -1,4 +1,3 @@
-from CS61A.projects.scheme.editor import formatter
 import os
 import re
 import sys

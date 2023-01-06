@@ -20,7 +20,7 @@ import log
 from documentation import search
 from execution_parser import strip_comments
 from file_manager import get_scm_files, save, read_file, new_file
-from CS61A.lab.lab12.editor.formatter import prettify
+import prettify
 from persistence import save_config, load_config
 from runtime_limiter import TimeLimitException, OperationCanceledException, scheme_limiter
 from scheme_exceptions import SchemeError, ParseError

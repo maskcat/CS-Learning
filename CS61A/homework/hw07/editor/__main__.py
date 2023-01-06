@@ -4,7 +4,7 @@ import os
 
 import local_server
 import log
-from CS61A.homework.hw07.editor.formatter import prettify
+import prettify
 
 
 def reformat_files(src, dest=None):

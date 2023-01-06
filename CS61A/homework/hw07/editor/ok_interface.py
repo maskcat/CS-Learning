@@ -1,4 +1,3 @@
-from CS61A.homework.hw07.editor import formatter
 import os
 import re
 import sys

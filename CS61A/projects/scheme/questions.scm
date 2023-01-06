@@ -15,7 +15,11 @@
 ;; Returns a list of two-element lists
 (define (enumerate s)
   ; BEGIN PROBLEM 16
-  'replace-this-line
+    (define (enumerate-help s index result)
+        (if (null? s)
+            result
+            (enumerate-help (cdr s) (+ index 1) (append result (list (list index (car s)))))))
+    (enumerate-help s 0 (list))
   )
   ; END PROBLEM 16
 

@@ -1,4 +1,3 @@
-from CS61A.lab.lab10.editor import formatter
 import os
 import re
 import sys
