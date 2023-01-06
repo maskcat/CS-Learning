@@ -425,7 +425,12 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_true_primitive(test):
             # BEGIN PROBLEM 13
-            "*** YOUR CODE HERE ***"
+            if clause.rest is nil:
+                return test
+            elif len(clause.rest) > 1:
+                return eval_all(clause.rest, env)
+            else:
+                return scheme_eval(clause.rest.first, env)
             # END PROBLEM 13
         expressions = expressions.rest
 
