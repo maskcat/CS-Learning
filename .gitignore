@@ -33,4 +33,4 @@ dist-ssr
 *.local
 .c_bin
 .classes
-/CS61A/.idea/
+.idea
